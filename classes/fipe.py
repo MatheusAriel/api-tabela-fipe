@@ -69,7 +69,7 @@ class Fipe:
                 tentativas += 1
                 print(f'{erro} \nTentando novamente pela {tentativas}x', erro.args[0])
                 if self.log_erro:
-                    self.database.insert_error(endpoint=_ENDPOINT, erro=erro, payload=None, code=erro.args[0])
+                    self.database.insert_error(endpoint=_ENDPOINT, msg_erro=erro, payload=None, code=erro.args[0])
                     continue
                 sleep(tentativas * 1.5)
 
@@ -90,7 +90,7 @@ class Fipe:
                 tentativas += 1
                 print(f'{erro} \nTentando novamente pela {tentativas}x', erro.args[0])
                 if self.log_erro:
-                    self.database.insert_error(endpoint=_ENDPOINT, erro=erro, payload=payload, code=erro.args[0])
+                    self.database.insert_error(endpoint=_ENDPOINT, msg_erro=erro, payload=payload, code=erro.args[0])
                     continue
                 sleep(tentativas * 1.5)
 
@@ -116,7 +116,7 @@ class Fipe:
                 tentativas += 1
                 print(f'{erro} \nTentando novamente pela {tentativas}x', erro.args[0])
                 if self.log_erro:
-                    self.database.insert_error(endpoint=_ENDPOINT, erro=erro, payload=payload, code=erro.args[0])
+                    self.database.insert_error(endpoint=_ENDPOINT, msg_erro=erro, payload=payload, code=erro.args[0])
                     continue
                 sleep(tentativas * 1.5)
 
@@ -140,7 +140,7 @@ class Fipe:
                 tentativas += 1
                 print(f'{erro} \nTentando novamente pela {tentativas}x', erro.args[0])
                 if self.log_erro:
-                    self.database.insert_error(endpoint=_ENDPOINT, erro=erro, payload=payload, code=erro.args[0])
+                    self.database.insert_error(endpoint=_ENDPOINT, msg_erro=erro, payload=payload, code=erro.args[0])
                     continue
                 sleep(tentativas * 1.5)
 
@@ -170,7 +170,7 @@ class Fipe:
                 tentativas += 1
                 print(f'{erro} \nTentando novamente pela {tentativas}x', erro.args[0])
                 if self.log_erro:
-                    self.database.insert_error(endpoint=_ENDPOINT, erro=erro, payload=payload, code=erro.args[0])
+                    self.database.insert_error(endpoint=_ENDPOINT, msg_erro=erro, payload=payload, code=erro.args[0])
                     continue
                 sleep(tentativas * 1.5)
 
