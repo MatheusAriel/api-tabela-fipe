@@ -205,3 +205,4 @@ class Fipe:
 if __name__ == '__main__':
     f = Fipe()
     print(f.consultar_tabela_preco())
+    print(f.consultar_marcas())
