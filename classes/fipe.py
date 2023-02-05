@@ -202,6 +202,6 @@ class Fipe:
             print(f"{hours} horas, {minutes} minutos e {seconds} segundos")
 
 
-# if __name__ == '__main__':
-#     f = Fipe()
-#     print(f.consultar_tabela_preco())
+if __name__ == '__main__':
+    f = Fipe()
+    print(f.consultar_tabela_preco())
