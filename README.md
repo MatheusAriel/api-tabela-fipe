@@ -1,12 +1,11 @@
 # api-tabela-fipe
 
-consumo da api da tabela fipe para fins de estudos, feito com python, com a biblioteca requests
+Consumo da api da tabela fipe para fins de estudos, feito com python, com a biblioteca requests.
+Baseia-se na ultima tabela de preço disponibilizada.
 
-- criar as tabelas que estão em models/db.sql
+- Criar as tabelas que estão em models/db.sql
 
-- configurar o arquivo models/parameters_db.py
+- Configurar o arquivo models/parameters_db.py
 
-para rodar o script:
-
-pip install -r requirements.txt
+- pip install -r requirements.txt
 
