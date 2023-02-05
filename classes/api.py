@@ -25,26 +25,30 @@ class APIClient:
         self.time_out = time_out
         self.headers = headers or {"Content-Type": "application/json"}
 
-    def request(self, endpoint, method=Methods.GET.value, payload=None):
+    def request(self, endpoint, method=Methods.GET.value, json=None):
         url = f"{self.base_url}/{endpoint}"
         try:
             if method == 'get':
                 response = requests.get(url, headers=self.headers, timeout=self.time_out)
             elif method == 'post':
-                response = requests.post(url, json=payload, headers=self.headers, timeout=self.time_out)
+                response = requests.post(url, json=json, headers=self.headers, timeout=self.time_out)
             elif method == 'put':
-                response = requests.put(url, json=payload, headers=self.headers, timeout=self.time_out)
+                response = requests.put(url, json=json, headers=self.headers, timeout=self.time_out)
             elif method == 'put':
-                response = requests.delete(url, json=payload, headers=self.headers, timeout=self.time_out)
+                response = requests.delete(url, json=json, headers=self.headers, timeout=self.time_out)
             elif method == 'patch':
-                response = requests.patch(url, json=payload, headers=self.headers, timeout=self.time_out)
+                response = requests.patch(url, json=json, headers=self.headers, timeout=self.time_out)
             else:
                 raise ValueError("Método inválido.")
 
             if response.status_code != 200:
                 raise APIError(response.status_code, response.json().get("message", "Erro desconhecido."))
 
-            return response.json()
+            result = response.json()
+            if 'erro' in response:
+                raise APIError(response.status_code, result['erro'])
+
+            return result
 
         except (requests.exceptions.RequestException, Exception) as error:
             raise APIError(0, f"Erro ({endpoint}): {error}")
