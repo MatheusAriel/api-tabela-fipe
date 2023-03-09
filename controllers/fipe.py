@@ -194,7 +194,6 @@ class Fipe:
                         fipe = self.consultar_valor(marca['Value'], modelo['Value'], anoModelo)
                         i += 1
                         print(fipe, i)
-                        list_fipes.append(fipe)
                         self.verify_fipe(list_fipes, fipe)
 
                     if len(list_fipes) > 0:
