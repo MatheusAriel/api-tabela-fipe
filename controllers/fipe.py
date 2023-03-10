@@ -5,6 +5,9 @@ from models.erros_fipe_model import ErrosFipeModel
 from enum import Enum
 from models.database import SessionMysql
 from controllers.api import APIClient, Methods
+import logging
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
 
 
 class TipoVeiculo(Enum):
@@ -67,7 +70,7 @@ class Fipe:
 
             except Exception as erro:
                 tentativas += 1
-                print(f'{erro} \nTentando novamente pela {tentativas}x', erro.args[0])
+                logging.error(f'{erro} \nTentando novamente pela {tentativas}x - Status {erro.args[0]}')
                 if self.log_erro:
                     ErrosFipeModel.insert_error(SessionMysql(), endpoint=_ENDPOINT, msg_erro=erro, payload=None,
                                                 code=erro.args[0])
@@ -89,7 +92,7 @@ class Fipe:
 
             except Exception as erro:
                 tentativas += 1
-                print(f'{erro} \nTentando novamente pela {tentativas}x', erro.args[0])
+                logging.error(f'{erro} \nTentando novamente pela {tentativas}x - Status {erro.args[0]}')
                 if self.log_erro:
                     ErrosFipeModel.insert_error(SessionMysql(), endpoint=_ENDPOINT, msg_erro=erro, payload=payload,
                                                 code=erro.args[0])
@@ -116,7 +119,7 @@ class Fipe:
 
             except Exception as erro:
                 tentativas += 1
-                print(f'{erro} \nTentando novamente pela {tentativas}x', erro.args[0])
+                logging.error(f'{erro} \nTentando novamente pela {tentativas}x - Status {erro.args[0]}')
                 if self.log_erro:
                     ErrosFipeModel.insert_error(SessionMysql(), endpoint=_ENDPOINT, msg_erro=erro, payload=payload,
                                                 code=erro.args[0])
@@ -141,7 +144,7 @@ class Fipe:
 
             except Exception as erro:
                 tentativas += 1
-                print(f'{erro} \nTentando novamente pela {tentativas}x', erro.args[0])
+                logging.error(f'{erro} \nTentando novamente pela {tentativas}x - Status {erro.args[0]}')
                 if self.log_erro:
                     ErrosFipeModel.insert_error(SessionMysql(), endpoint=_ENDPOINT, msg_erro=erro, payload=payload,
                                                 code=erro.args[0])
@@ -171,7 +174,7 @@ class Fipe:
 
             except Exception as erro:
                 tentativas += 1
-                print(f'{erro} \nTentando novamente pela {tentativas}x', erro.args[0])
+                logging.error(f'{erro} \nTentando novamente pela {tentativas}x - Status {erro.args[0]}')
                 if self.log_erro:
                     ErrosFipeModel.insert_error(SessionMysql(), endpoint=_ENDPOINT, msg_erro=erro, payload=payload,
                                                 code=erro.args[0])
@@ -193,7 +196,7 @@ class Fipe:
                     for anoModelo in anosModelos:
                         fipe = self.consultar_valor(marca['Value'], modelo['Value'], anoModelo)
                         i += 1
-                        print(fipe, i)
+                        logging.info(f"{fipe}, {i}")
                         self.verify_fipe(list_fipes, fipe)
 
                     if len(list_fipes) > 0:
@@ -205,10 +208,10 @@ class Fipe:
             seconds = int(elapsed_time % 60)
             minutes = int((elapsed_time / 60) % 60)
             hours = int(elapsed_time / 3600)
-            print(f"{hours} horas, {minutes} minutos e {seconds} segundos - TOTAL: {i}")
+            logging.info(f"{hours} horas, {minutes} minutos e {seconds} segundos - TOTAL: {i}")
 
 
 if __name__ == '__main__':
     f = Fipe()
-    print(f.consultar_tabela_preco())
-    print(f.consultar_marcas())
+    logging.info(f.consultar_tabela_preco())
+    logging.info(f.consultar_marcas())

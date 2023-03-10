@@ -2,4 +2,4 @@ requests
 mysql-connector
 SQLAlchemy
 pymysql==1.0.2
-dotenv
+python-dotenv
