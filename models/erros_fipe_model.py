@@ -12,9 +12,6 @@ class ErrosFipeModel(Base):
     msg_erro = Column(Text(), nullable=True)
     code = Column(Integer, nullable=True)
 
-    def __repr__(self):
-        return f"<erro {self.id}"
-
     def insert_error(db: SessionMysql, endpoint, msg_erro, payload=None, code=0) -> bool:
         try:
             obj = ErrosFipeModel(

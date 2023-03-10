@@ -20,9 +20,6 @@ class FipeModel(Base):
     tentativas_requisicoes = Column(Integer, nullable=False)
     tempo_resposta = Column(DECIMAL, nullable=True)
 
-    def __repr__(self):
-        return f"<fipe {self.codigo_fipe}"
-
     @classmethod
     def enum_tipo_veiculo(cls, tipo_veiculo_fipe):
         tipos_veiculos = {1: 'L', 2: 'M', 3: 'P'}
