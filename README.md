@@ -3,6 +3,8 @@
 Extrator de dados da tabela fipe para fins de estudos, feito com python, com a biblioteca requests.
 Baseia-se na ultima tabela de preço disponibilizada.
 
+### Instalação
+
 - Criar as tabelas que estão em models/db.sql
 
 - Criar o venv: 
