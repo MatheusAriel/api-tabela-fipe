@@ -66,8 +66,7 @@ class FipeModel(Base):
             return True
 
         except exc.SQLAlchemyError as err:
-            print('Erro DB: ', err)
-            return False
+            raise Exception(f"Erro DB: {err}")
 
         finally:
             db.close()
@@ -83,8 +82,7 @@ class FipeModel(Base):
                 first()
 
         except exc.SQLAlchemyError as err:
-            print('Erro DB: ', err)
-            return None
+            raise Exception(f"Erro DB: {err}")
 
         finally:
             db.close()

@@ -56,12 +56,12 @@ class Fipe:
         return codigo_combustivel, ano_modelo
 
     def consultar_tabela_preco(self) -> int:
-        _ENDPOINT = 'ConsultarTabelaDeReferencia'
+        endpoint = 'ConsultarTabelaDeReferencia'
         tentativas = 1
         status = False
         while not status:
             try:
-                response = self.api.request(endpoint=_ENDPOINT, method=Methods.POST.value)
+                response = self.api.request(endpoint=endpoint, method=Methods.POST.value)
                 if 'Codigo' in response[0]:
                     status = True
                     return response[0]['Codigo']
@@ -72,13 +72,13 @@ class Fipe:
                 tentativas += 1
                 logging.error(f'{erro} \nTentando novamente pela {tentativas}x - Status {erro.args[0]}')
                 if self.log_erro:
-                    ErrosFipeModel.insert_error(SessionMysql(), endpoint=_ENDPOINT, msg_erro=erro, payload=None,
+                    ErrosFipeModel.insert_error(SessionMysql(), endpoint=endpoint, msg_erro=erro, payload=None,
                                                 code=erro.args[0])
                 sleep(tentativas * 1.5)
                 continue
 
     def consultar_marcas(self) -> list:
-        _ENDPOINT = 'ConsultarMarcas'
+        endpoint = 'ConsultarMarcas'
         tentativas = 1
         status = False
 
@@ -86,7 +86,7 @@ class Fipe:
                    'codigoTipoVeiculo': self.tipo_veiculo}
         while not status:
             try:
-                response = self.api.request(endpoint=_ENDPOINT, method=Methods.POST.value, json=payload)
+                response = self.api.request(endpoint=endpoint, method=Methods.POST.value, json=payload)
                 status = True
                 return response
 
@@ -94,13 +94,13 @@ class Fipe:
                 tentativas += 1
                 logging.error(f'{erro} \nTentando novamente pela {tentativas}x - Status {erro.args[0]}')
                 if self.log_erro:
-                    ErrosFipeModel.insert_error(SessionMysql(), endpoint=_ENDPOINT, msg_erro=erro, payload=payload,
+                    ErrosFipeModel.insert_error(SessionMysql(), endpoint=endpoint, msg_erro=erro, payload=payload,
                                                 code=erro.args[0])
                 sleep(tentativas * 1.5)
                 continue
 
     def consultar_modelos(self, codigo_marca) -> list:
-        _ENDPOINT = 'ConsultarModelos'
+        endpoint = 'ConsultarModelos'
         tentativas = 1
         status = False
 
@@ -110,7 +110,7 @@ class Fipe:
 
         while not status:
             try:
-                response = self.api.request(endpoint=_ENDPOINT, method=Methods.POST.value, json=payload)
+                response = self.api.request(endpoint=endpoint, method=Methods.POST.value, json=payload)
                 if 'Modelos' in response:
                     status = True
                     return response['Modelos']
@@ -121,13 +121,13 @@ class Fipe:
                 tentativas += 1
                 logging.error(f'{erro} \nTentando novamente pela {tentativas}x - Status {erro.args[0]}')
                 if self.log_erro:
-                    ErrosFipeModel.insert_error(SessionMysql(), endpoint=_ENDPOINT, msg_erro=erro, payload=payload,
+                    ErrosFipeModel.insert_error(SessionMysql(), endpoint=endpoint, msg_erro=erro, payload=payload,
                                                 code=erro.args[0])
                 sleep(tentativas * 1.5)
                 continue
 
     def consultar_ano_modelo(self, codigo_marca, codigo_modelo) -> list:
-        _ENDPOINT = 'ConsultarAnoModelo'
+        endpoint = 'ConsultarAnoModelo'
         tentativas = 1
         status = False
 
@@ -138,7 +138,7 @@ class Fipe:
 
         while not status:
             try:
-                response = self.api.request(endpoint=_ENDPOINT, method=Methods.POST.value, json=payload)
+                response = self.api.request(endpoint=endpoint, method=Methods.POST.value, json=payload)
                 status = True
                 return response
 
@@ -146,13 +146,13 @@ class Fipe:
                 tentativas += 1
                 logging.error(f'{erro} \nTentando novamente pela {tentativas}x - Status {erro.args[0]}')
                 if self.log_erro:
-                    ErrosFipeModel.insert_error(SessionMysql(), endpoint=_ENDPOINT, msg_erro=erro, payload=payload,
+                    ErrosFipeModel.insert_error(SessionMysql(), endpoint=endpoint, msg_erro=erro, payload=payload,
                                                 code=erro.args[0])
                 sleep(tentativas * 1.5)
                 continue
 
     def consultar_valor(self, codigo_marca, codigo_modelo, obj_ano_modelo) -> list:
-        _ENDPOINT = 'ConsultarValorComTodosParametros'
+        endpoint = 'ConsultarValorComTodosParametros'
         tentativas = 1
         status = False
 
@@ -166,7 +166,7 @@ class Fipe:
         start = time()
         while not status:
             try:
-                response = self.api.request(endpoint=_ENDPOINT, method=Methods.POST.value, json=payload)
+                response = self.api.request(endpoint=endpoint, method=Methods.POST.value, json=payload)
                 response['tempo_resposta'] = float(f"{(time() - start):.2f}")
                 response['tentativas_requisicoes'] = tentativas
                 status = True
@@ -176,7 +176,7 @@ class Fipe:
                 tentativas += 1
                 logging.error(f'{erro} \nTentando novamente pela {tentativas}x - Status {erro.args[0]}')
                 if self.log_erro:
-                    ErrosFipeModel.insert_error(SessionMysql(), endpoint=_ENDPOINT, msg_erro=erro, payload=payload,
+                    ErrosFipeModel.insert_error(SessionMysql(), endpoint=endpoint, msg_erro=erro, payload=payload,
                                                 code=erro.args[0])
                 sleep(tentativas * 1.5)
                 continue
@@ -203,6 +203,8 @@ class Fipe:
                         FipeModel.insert_fipes(SessionMysql(), results=list_fipes,
                                                codigo_tabela=self.codigo_tabela_referencia,
                                                tipo_veiculo=self.tipo_veiculo)
+        except Exception as err:
+            logging.error(err)
         finally:
             elapsed_time = time() - start
             seconds = int(elapsed_time % 60)
